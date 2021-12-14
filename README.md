@@ -1,10 +1,9 @@
-# Pathfinding Visualizer
-### Created by Shawn Rodgers
+# Pathfinding Visualizer (WIP)
 
 <img alt="screenshot of application" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/sc1.jpg" style="width: 500px; margin: 30px;">
 
 ## Description
-For my final project I created a pathfinding visualizer for Dijkstra's shortest path algorithm. While I originally
+For my cs 120 final project I created a pathfinding visualizer for Dijkstra's shortest path algorithm. While I originally
 planned to implement more algorithm's, I only had time to get dijkstra's working. The program works by creating a
 two-dimensional grid populated with nodes of equal size. Each node has a theoretical edge connecting it to its
 neighboring nodes with a weight of 1. The grid has a start node and a target node, and the user is allowed to draw
