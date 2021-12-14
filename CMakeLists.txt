@@ -30,7 +30,7 @@ file(GLOB SOURCE_FILES
         lib/*.cpp
         )
 
-add_executable(PathFinding ${SOURCE_FILES} include/Entity.h lib/Entity.cpp include/Node.h lib/Node.cpp include/Grid.h lib/Grid.cpp include/TextBox.h lib/TextBox.cpp include/Dropdown.h lib/Dropdown.cpp include/Algorithm.h lib/Algorithm.cpp)
+add_executable(PathFinding ${SOURCE_FILES})
 
 if (WIN32)
     target_link_libraries (PathFinding ${OPENGL_LIBRARIES} freeglut winmm.lib)
