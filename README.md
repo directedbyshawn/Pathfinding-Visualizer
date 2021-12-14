@@ -41,26 +41,3 @@ the project. The GUI design on the other hand is quite similar to my plan.
     <img alt="screenshot of GUI plan" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/gui-plan.png" style="width: 100%; margin: 30px;">
     <img alt="screenshot of UML Diagram" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/uml.png" style="width: 100%; margin: 30px;">
 </div>
-
-## Concepts included from class.
-This project includes concepts from both module 2 and 4. All the custom objects I created are subclasses of the
-entity class. Since all the custom objects are rendered to the screen, it made since to put them all under one
-super class that contains members like position, size, and color. By doing this, I was able to use polymorphism (module 2) to 
-print all of the custom entities in just 3 lines in the display() function.
-```asm
-for (Entity* entity : entities) {
-        entity->draw();
-    }
-```
-By adding each custom created entity to the vector of entities, I can draw them all from that instead of having
-to individually draw each entity. The concepts from module 4 should be quite obvious as the entire program is a GUI
-created with OpenGL. 
-
-## Grade
-I hate to sound cheesy but I really do feel that I deserve the full 140pts for this project. I chose a concept that 
-is both challenging and beneficial to myself and my career. Once I have implemented a few more algorithms, it will
-make an excellent resume project. I am very proud that I was able to finish this project as I have never worked
-with pathfinding algorithms before other than briefly discussing them in cs120. I am also very proud of my code, as 
-in my opinion it is very elegant and demonstrates good practices of abstraction and encapsulation. All user defined
-objects are easy to reuse, replicate, and modify. Considering how much is going on, the program is very understandable at a 
-high level thanks to proper documentation and the practices previously discussed.
