@@ -40,3 +40,9 @@ the project. The GUI design on the other hand is quite similar to my plan.
     <img alt="screenshot of GUI plan" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/gui-plan.png" style="width: 100%; margin: 30px;">
     <img alt="screenshot of UML Diagram" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/uml.png" style="width: 100%; margin: 30px;">
 </div>
+
+## TODO
+ - [ ] Add dropdown for speed 
+ - [ ] Make it so that when you click on the grid you toggle drawing or not drawing walls instead of clicking for each wall
+ - [ ] Implement more algorithms
+ - [ ] Add method docs to header files
