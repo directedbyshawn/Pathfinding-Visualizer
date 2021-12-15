@@ -284,7 +284,7 @@ void mouse(int button, int state, int x, int y) {
                 }
                 screen = SORT;
                 visitedIndex = 0;
-                pathIndex = 0;
+                pathIndex = pathNodes.size();
             }
             else if (thisButton->getText() == "Reset" && (screen == HOME || screen == DONE)) {
                 screen = HOME;
@@ -334,13 +334,13 @@ void pathTimer(int dummy) {
             break;
         }
         if (visitedIndex == visitedNodes.size()) {
-            while (pathIndex < pathNodes.size()) {
+            while (pathIndex > 0) {
+                pathIndex--;
                 pathNodes[pathIndex]->setNodeType(PATH);
-                pathIndex++;
                 break;
             }
         }
-        if (visitedIndex == visitedNodes.size() && pathIndex == pathNodes.size()) {
+        if (visitedIndex == visitedNodes.size() && pathIndex == 0) {
             screen = DONE;
         }
     }
