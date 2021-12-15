@@ -16,10 +16,10 @@ vector<Entity*> entities;
 vector<TextBox*> buttons;
 Grid grid;
 vector<Node*> visitedNodes, pathNodes;
-int visitedIndex, pathIndex;
+int visitedIndex, pathIndex, drawSpeed;
 bool visitedDrawn, pathDrawn;
 TextBox title, run, reset, unvisited, visited, start, target, wall, path;
-Dropdown dropdown;
+Dropdown algorithm, speed;
 Node exUnvisited, exVisited, exStart, exTarget, exWall, exPath;
 State screen;
 int gridX, gridY = 0;
@@ -144,17 +144,30 @@ void initKey() {
 }
 
 void initDropdown() {
-    dropdown = Dropdown();
-    dropdown.setColor(black);
-    dropdown.setWidth(200);
-    dropdown.setHeight(70);
-    dropdown.setCenterX(width - 400);
-    dropdown.setCenterY(55);
-    dropdown.addOption({"Dijkstra", 5.0});
-    dropdown.addOption({"A* Search", 5.0});
-    dropdown.addOption({"Breadth First", 5.0});
-    dropdown.addOption({"Depth First", 5.0});
-    entities.push_back(&dropdown);
+    algorithm = Dropdown();
+    algorithm.setColor(black);
+    algorithm.setWidth(200);
+    algorithm.setHeight(70);
+    algorithm.setCenterX(width - 400);
+    algorithm.setCenterY(55);
+    algorithm.addOption({"Dijkstra", 5.0});
+    algorithm.addOption({"A* Search", 5.0});
+    algorithm.addOption({"Breadth First", 5.0});
+    algorithm.addOption({"Depth First", 5.0});
+    entities.push_back(&algorithm);
+}
+
+void initSpeed() {
+    speed = Dropdown();
+    speed.setColor(black);
+    speed.setWidth(200);
+    speed.setHeight(70);
+    speed.setCenterX(width - 650);
+    speed.setCenterY(55);
+    speed.addOption({"Fast", 5.5});
+    speed.addOption({"Medium", 7.0});
+    speed.addOption({"Slow", 5.5});
+    entities.push_back(&speed);
 }
 
 void init() {
@@ -166,6 +179,7 @@ void init() {
 
     // entities & settings initialized
     screen = HOME;
+    drawSpeed = 10;
 
     initTitle();
     initRun();
@@ -173,6 +187,7 @@ void init() {
     initKey();
     initGrid();
     initDropdown();
+    initSpeed();
 
 }
 
@@ -227,28 +242,45 @@ void cursor(int x, int y) {
     }
 
     // change reset button color when hovering
-    if (reset.isOverlapping(x, y)) {
+    if (reset.isOverlapping(x, y) && screen != SORT) {
         reset.setColor(hoverFill);
     }
     else {
         reset.setColor(black);
     }
 
-
-    // change dropdown color when menu is closed
+    // change speed color when menu is closed
     if (screen == HOME) {
-        if (!dropdown.isOpen()) {
-            if (dropdown.isOverlapping(x, y)) {
-                dropdown.setOptionColor(0, hoverFill);
+        if (!speed.isOpen()) {
+            if (speed.isOverlapping(x, y)) {
+                speed.setOptionColor(0, hoverFill);
             }
             else {
-                dropdown.setOptionColor(0, black);
+                speed.setOptionColor(0, black);
             }
         }
-        else if (dropdown.isOpen()) {
-            if (dropdown.isOverlapping(x, y)) {
+        else if (speed.isOpen()) {
+            if (speed.isOverlapping(x, y)) {
                 // highlights option being hovered
-                dropdown.hover(x, y);
+                speed.hover(x, y);
+            }
+        }
+    }
+
+    // change algorithm color when menu is closed
+    if (screen == HOME) {
+        if (!algorithm.isOpen()) {
+            if (algorithm.isOverlapping(x, y)) {
+                algorithm.setOptionColor(0, hoverFill);
+            }
+            else {
+                algorithm.setOptionColor(0, black);
+            }
+        }
+        else if (algorithm.isOpen()) {
+            if (algorithm.isOverlapping(x, y)) {
+                // highlights option being hovered
+                algorithm.hover(x, y);
             }
         }
     }
@@ -270,16 +302,16 @@ void mouse(int button, int state, int x, int y) {
         if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && thisButton->isOverlapping(x, y)) {
             if (thisButton->getText() == "Run" && screen == HOME) {
                 thisButton->setColor(pressFill);
-                if (dropdown.getCurrentOption().text == "Dijkstra") {
+                if (algorithm.getCurrentOption().text == "Dijkstra") {
                     grid.dijkstras(visitedNodes, pathNodes);
                 }
-                else if (dropdown.getCurrentOption().text == "A* Search") {
+                else if (algorithm.getCurrentOption().text == "A* Search") {
                     grid.aStar();
                 }
-                else if (dropdown.getCurrentOption().text == "Breadth First") {
+                else if (algorithm.getCurrentOption().text == "Breadth First") {
                     grid.breadthFirst();
                 }
-                else if (dropdown.getCurrentOption().text == "Depth First") {
+                else if (algorithm.getCurrentOption().text == "Depth First") {
                     grid.depthFirst();
                 }
                 screen = SORT;
@@ -298,23 +330,54 @@ void mouse(int button, int state, int x, int y) {
             thisButton->setColor(black);
         }
     }
-    // press dropdown
+    // press algorithm dropdown
     if (screen == HOME) {
-        if (dropdown.isOverlapping(x, y)) {
+        if (algorithm.isOverlapping(x, y)) {
             if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == HOME) {
-                if (dropdown.isOpen()) {
+                if (algorithm.isOpen()) {
                     // drop down is open
-                    dropdown.press(x, y);
+                    algorithm.press(x, y);
                 }
                 else {
                     // dropdown is closed
-                    dropdown.setOptionColor(0, pressFill);
-                    dropdown.toggle();
+                    algorithm.setOptionColor(0, pressFill);
+                    algorithm.toggle();
                 }
             }
             else {
-                for (int i = 0; i < dropdown.getOptions().size(); i++) {
-                    dropdown.setOptionColor(i, black);
+                for (int i = 0; i < algorithm.getOptions().size(); i++) {
+                    algorithm.setOptionColor(i, black);
+                }
+            }
+        }
+    }
+
+    // click speed dropdown
+    if (screen == HOME) {
+        if (speed.isOverlapping(x, y)) {
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && screen == HOME) {
+                if (speed.isOpen()) {
+                    // drop down is open
+                    speed.press(x, y);
+                    if (speed.getCurrentOption().text == "Fast") {
+                        drawSpeed = 10;
+                    }
+                    else if (speed.getCurrentOption().text == "Medium") {
+                        drawSpeed = 20;
+                    }
+                    else {
+                        drawSpeed = 30;
+                    }
+                }
+                else {
+                    // dropdown is closed
+                    speed.setOptionColor(0, pressFill);
+                    speed.toggle();
+                }
+            }
+            else {
+                for (int i = 0; i < speed.getOptions().size(); i++) {
+                    speed.setOptionColor(i, black);
                 }
             }
         }
@@ -345,7 +408,7 @@ void pathTimer(int dummy) {
         }
     }
 
-    glutTimerFunc(10, pathTimer, dummy);
+    glutTimerFunc(drawSpeed, pathTimer, dummy);
     glutPostRedisplay();
 
 }

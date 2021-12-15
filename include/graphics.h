@@ -21,6 +21,7 @@ void initGrid();
 void initTitle();
 void initRun();
 void initReset();
+void initSpeed();
 void initKey();
 void initDropdown();
 
