@@ -22,7 +22,7 @@ struct nodeMap {
     Node* previousNode;
 
     /**
-     * Initializes nodemap entry with default node constructor and distance of 999
+     * Initializes nodemap entry with default node object and distance of 999
      */
     nodeMap();
 

@@ -85,18 +85,15 @@ void Grid::createNodes() {
     for (x = 0; x < getNumColumns(); x++) {
         yPos = getTopY() + 10;
         for (y = 0; y < getNumRows(); y++) {
-
             // create node and set its position
             Node newNode = Node();
             nodes[x][y] = newNode;
-
             // settings
             nodes[x][y].setPosition(y, x);
             nodes[x][y].setCenterX(xPos);
             nodes[x][y].setCenterY(yPos);
             nodes[x][y].setId(id);
-
-            // determine if it is a start or target node
+            // determine if its a start or target node
             if (x == startPosition.x && y == startPosition.y) {
                 setNodeType(y, x, START);
                 startNode = &nodes[x][y];
@@ -105,11 +102,9 @@ void Grid::createNodes() {
                 setNodeType(y, x, TARGET);
                 targetNode = &nodes[x][y];
             }
-
             // increment y position and id
             yPos += 20;
             id++;
-
         }
         // increment x position
         xPos += 20;
