@@ -2,8 +2,6 @@
 
 dimension::dimension() : width(20), height(20) {}
 
-dimension::dimension(int width, int height) : width(width), height(height) {}
-
 point::point() : x(600), y(500) {}
 
 point::point(int x, int y) : x(x), y(y) {}
@@ -24,14 +22,6 @@ Entity::Entity(point center, color fill) : size(dimension()), center(center), fi
 
 Entity::Entity(dimension size, point center, color fill) : size(size), center(center), fill(fill) {}
 
-dimension Entity::getDimensions() const {
-    return size;
-}
-
-void Entity::setDimensions(dimension size) {
-    size = size;
-}
-
 int Entity::getHeight() const {
     return size.height;
 }
@@ -46,10 +36,6 @@ int Entity::getWidth() const {
 
 void Entity::setWidth(int width) {
     size.width = width;
-}
-
-point Entity::getCenter() const {
-    return center;
 }
 
 void Entity::setCenter(point center) {
@@ -98,17 +84,6 @@ void Entity::setColor(double r, double g, double b) {
     fill.b = b;
 }
 
-void Entity::setColor(double r, double g, double b, double a) {
-    fill.r = r;
-    fill.g = g;
-    fill.b = b;
-    fill.a = a;
-}
-
-color Entity::getColor() const {
-    return fill;
-}
-
 double Entity::getRed() const {
     return fill.r;
 }
@@ -119,10 +94,6 @@ double Entity::getGreen() const {
 
 double Entity::getBlue() const {
     return fill.b;
-}
-
-double Entity::getAlpha() const {
-    return fill.a;
 }
 
 bool Entity::isOverlapping(int x, int y) const {

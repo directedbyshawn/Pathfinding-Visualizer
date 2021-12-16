@@ -326,13 +326,13 @@ void mouse(int button, int state, int x, int y) {
                     grid.dijkstras(visitedNodes, pathNodes);
                 }
                 else if (algorithm.getCurrentOption().text == "A* Search") {
-                    grid.aStar();
+                    grid.aStar(visitedNodes, pathNodes);
                 }
                 else if (algorithm.getCurrentOption().text == "Breadth First") {
-                    grid.breadthFirst();
+                    grid.breadthFirst(visitedNodes, pathNodes);
                 }
                 else if (algorithm.getCurrentOption().text == "Depth First") {
-                    grid.depthFirst();
+                    grid.depthFirst(visitedNodes, pathNodes);
                 }
                 screen = SORT;
                 visitedIndex = 0;

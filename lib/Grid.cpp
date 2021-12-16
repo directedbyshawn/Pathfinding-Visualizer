@@ -1,7 +1,5 @@
 #include "Grid.h"
 #include <math.h>
-#include <iostream>
-#include <iomanip>
 #include <map>
 
 nodeMap::nodeMap() : shortestDistance(999) {
@@ -12,10 +10,6 @@ nodeMap::nodeMap() : shortestDistance(999) {
 nodeMap::nodeMap(int shortestDistance, Node* previousVertex) : shortestDistance(shortestDistance), previousNode(previousVertex) {}
 
 Grid::Grid() : Entity(), numRows(35), numColumns(55) {
-    init();
-}
-
-Grid::Grid(int numRows, int numColumns) : Entity(), numRows(numRows), numColumns(numColumns) {
     init();
 }
 
@@ -55,16 +49,8 @@ int Grid::getNumRows() const {
     return numRows;
 }
 
-void Grid::setNumRows(int numRows) {
-    this->numRows = numRows;
-}
-
 int Grid::getNumColumns() const {
     return numColumns;
-}
-
-void Grid::setNumColumns(int numColumns) {
-    this->numColumns = numColumns;
 }
 
 void Grid::toggleWallNode(int row, int column, bool rDown) {
@@ -87,9 +73,8 @@ void Grid::setNodeType(int row, int column, NodeType type) {
 void Grid::createNodes() {
 
     // calculate position of start and target nodes
-    int middleRow, splitCol;
-    middleRow = ((int)ceil((double)numRows / 2.0)) - 1;
-    splitCol = 7;
+    int middleRow = ((int)ceil((double)numRows / 2.0)) - 1;
+    int splitCol = 7;
     point startPosition = {splitCol, middleRow};
     point targetPosition = {numColumns - splitCol - 1, middleRow};
 
@@ -121,13 +106,16 @@ void Grid::createNodes() {
                 targetNode = &nodes[x][y];
             }
 
+            // increment y position and id
             yPos += 20;
             id++;
 
         }
+        // increment x position
         xPos += 20;
     }
 
+    // adds determines neighbors of each node in grid
     addNeighbors();
 
 }
@@ -219,54 +207,12 @@ void Grid::addNeighbors() {
     }
 }
 
-void Grid::drawNeighbors() {
-    // outputs the info about the neighboring nodes of each node in the grid, used this to
-    // figure out if the addNeighbors() function was working properly. Will be deleted once
-    // I successfully implement all of the algorithm's
-    for (int x = 0; x < getNumColumns(); x++) {
-        for (int y = 0; y < getNumRows(); y++) {
-            cout << "Node: (" << nodes[x][y].getColumn() + 1 << ", " << nodes[x][y].getRow() + 1 << ")" << endl;
-            for (int i = 0; i < nodes[x][y].getNeighbors().size(); i++) {
-                cout << nodes[x][y].getNeighbors()[i]->getColumn() + 1 << ", ";
-                cout << nodes[x][y].getNeighbors()[i]->getRow() + 1 << endl;
-            }
-            cout << "---------------------------------" << endl;
-        }
-    }
-}
-
-void Grid::drawNode(int column, int row) {
-    nodes[column][row].draw();
-}
-
 void Grid::reset() {
     // reset grid of nodes
     for (int x = 0; x < getNumColumns(); x++) {
         nodes[x].clear();
     }
     init();
-}
-
-void Grid::printNodeMap(vector<Node*>& visited, map<Node*, nodeMap>& pathMap) {
-
-    // prints node map that dictates the shortest path from the origin to each node,
-    // as well as a linked list to get from that node to the origin, which is how
-    // the shortest path to the target is determined.
-
-    cout << visited.size() << endl;
-
-    cout << endl << endl << "Node map" << endl << endl;
-
-    for (Node* node : visited) {
-        if (node->getNodeType() != WALL) {
-            cout << "Node " << to_string(node->getId()) << ": (" << node->getColumn() << ", " << node->getRow() << ")" << endl;
-            cout << "Node type: " << node->getNodeType() << endl;
-            cout << "Shortest distance to start: " << pathMap[node].shortestDistance << endl;
-            cout << "Node came from: " << pathMap[node].previousNode->getId() << endl;
-            cout << endl << "---------------------------------" << endl;
-        }
-    }
-
 }
 
 void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
@@ -343,7 +289,7 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 
     }
 
-    // draw path from target to start
+    // adds path nodes to vector
     while (currentNode->getId() != startNode->getId()) {
         path.push_back(currentNode);
         currentNode = pathMap[currentNode].previousNode;
@@ -352,7 +298,7 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 
 }
 
-void Grid::aStar() {
+void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
     for (int x = 0; x < 3; x++) {
         for (int y = 0; y < 7; y++) {
             nodes[x][y].setNodeType(PATH);
@@ -360,7 +306,7 @@ void Grid::aStar() {
     }
 }
 
-void Grid::breadthFirst() {
+void Grid::breadthFirst(vector<Node*>& visited, vector<Node*>& path) {
     for (int x = 0; x < getNumColumns(); x++) {
         for (int y = 0; y < getNumRows(); y++) {
             nodes[x][y].setNodeType(WALL);
@@ -368,7 +314,7 @@ void Grid::breadthFirst() {
     }
 }
 
-void Grid::depthFirst() {
+void Grid::depthFirst(vector<Node*>& visited, vector<Node*>& path) {
     for (int x = 0; x < getNumColumns(); x++) {
         for (int y = 0; y < getNumRows(); y++) {
             nodes[x][y].setNodeType(START);
