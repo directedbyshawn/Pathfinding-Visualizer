@@ -16,7 +16,7 @@ vector<Entity*> entities;
 vector<TextBox*> buttons;
 Grid grid;
 vector<Node*> visitedNodes, pathNodes;
-int visitedIndex, pathIndex, drawSpeed;
+int visitedIndex, pathIndex, drawSpeed, tempSpeed;
 bool visitedDrawn, pathDrawn, rButtonDown, lButtonDown;
 TextBox title, run, reset, unvisited, visited, start, target, wall, path;
 Dropdown algorithm, speed;
@@ -300,7 +300,7 @@ void cursor(int x, int y) {
 
 void mouse(int button, int state, int x, int y) {
     // create wall node
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME && !rButtonDown) {
         if (lButtonDown) {
             lButtonDown = false;
         }
@@ -309,7 +309,7 @@ void mouse(int button, int state, int x, int y) {
         }
     }
     // delete wall node
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME) {
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME && !lButtonDown) {
         if (rButtonDown) {
             rButtonDown = false;
         }
@@ -417,6 +417,13 @@ void pathTimer(int dummy) {
             break;
         }
         if (visitedIndex == visitedNodes.size()) {
+            if (pathIndex == pathNodes.size()) {
+                tempSpeed = drawSpeed;
+                drawSpeed = 30;
+            }
+            if (pathIndex < 2) {
+                drawSpeed = tempSpeed;
+            }
             while (pathIndex > 0) {
                 pathIndex--;
                 pathNodes[pathIndex]->setNodeType(PATH);
