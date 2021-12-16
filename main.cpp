@@ -17,7 +17,7 @@ vector<TextBox*> buttons;
 Grid grid;
 vector<Node*> visitedNodes, pathNodes;
 int visitedIndex, pathIndex, drawSpeed;
-bool visitedDrawn, pathDrawn;
+bool visitedDrawn, pathDrawn, rButtonDown, lButtonDown;
 TextBox title, run, reset, unvisited, visited, start, target, wall, path;
 Dropdown algorithm, speed;
 Node exUnvisited, exVisited, exStart, exTarget, exWall, exPath;
@@ -180,6 +180,8 @@ void init() {
     // entities & settings initialized
     screen = HOME;
     drawSpeed = 10;
+    rButtonDown = false;
+    lButtonDown = false;
 
     initTitle();
     initRun();
@@ -285,17 +287,35 @@ void cursor(int x, int y) {
         }
     }
 
+    // drawing & removing wall nodes
+    if (lButtonDown && !rButtonDown) {
+        grid.detectMouse(x, y, true);
+    }
+    if (rButtonDown && !lButtonDown) {
+        grid.detectMouse(x, y, false);
+    }
+
     glutPostRedisplay();
 }
 
 void mouse(int button, int state, int x, int y) {
     // create wall node
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME) {
-        grid.detectMouse(x, y, true);
+        if (lButtonDown) {
+            lButtonDown = false;
+        }
+        else {
+            lButtonDown = true;
+        }
     }
     // delete wall node
     if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && grid.isOverlapping(x, y) && screen == HOME) {
-        grid.detectMouse(x, y, false);
+        if (rButtonDown) {
+            rButtonDown = false;
+        }
+        else {
+            rButtonDown = true;
+        }
     }
     // press button
     for (TextBox* thisButton : buttons) {
