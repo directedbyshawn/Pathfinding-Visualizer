@@ -22,9 +22,9 @@ I cannot verify that it will run successfully.
 
 ## Documentation and planning
 <div style="width: 500px;">
-    GUI Plan
+    <h3>GUI Plan</h3>
     <img alt="screenshot of GUI plan" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/gui-plan.png" style="width: 100%; margin: 30px;">
-    UML Diagram
+    <h3>UML Diagram</h3>
     <img alt="screenshot of UML Diagram" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/uml.png" style="width: 100%; margin: 30px;">
 </div>
 
