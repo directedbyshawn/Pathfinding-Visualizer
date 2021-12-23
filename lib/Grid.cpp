@@ -1,6 +1,7 @@
 #include "Grid.h"
 #include <math.h>
 #include <map>
+#include <iostream>
 
 nodeMap::nodeMap() : shortestDistance(999) {
     Node node = Node();
