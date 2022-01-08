@@ -294,11 +294,86 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 }
 
 void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
-    for (int x = 0; x < 3; x++) {
-        for (int y = 0; y < 7; y++) {
-            nodes[x][y].setNodeType(PATH);
+
+    map<Node*, nodeMap> pathMap;
+    vector<Node*>  unvisited;
+    Node* currentNode;
+    bool targetFound = false;
+    int x, y, i, currentShortestDistance, timeout;
+
+    // initialize nodemap
+    for (x = 0; x < getNumColumns(); x++) {
+        for (y = 0; y < getNumRows(); y++) {
+            if (nodes[x][y].getNodeType() == START) {
+                pathMap[&nodes[x][y]] = nodeMap(0, &nodes[x][y]);
+            }
+            else {
+                pathMap[&nodes[x][y]] = nodeMap();
+            }
         }
     }
+
+    // add all verticies to unvisited vector
+    for (x = 0; x < getNumColumns(); x++) {
+        for (y = 0; y < getNumRows(); y++) {
+            unvisited.push_back(&nodes[x][y]);
+        }
+    }
+
+    timeout = 0;
+    while (!targetFound && timeout < 10000) {
+
+        currentShortestDistance = 999;
+
+        // finds unvisited node with shortest distance from the start
+        for (Node* node : unvisited) {
+            if (pathMap[node].shortestDistance < currentShortestDistance) {
+                currentNode = node;
+                currentShortestDistance = pathMap[node].shortestDistance;
+            }
+        }
+
+        // inspects all neighbors of current vertex
+        for (Node* neighbor : currentNode->getNeighbors()) {
+            // if target node has been found, stop
+            if (neighbor->getNodeType() == TARGET) {
+                targetFound = true;
+                break;
+            }
+            if (neighbor->getNodeType() == UNVISITED) {
+                // if calculated distance from current neighbor to start node is less
+                // than the known distance, then value in the pathMap is replaced
+                if (pathMap[currentNode].shortestDistance+1 < pathMap[neighbor].shortestDistance) {
+                    pathMap[neighbor].shortestDistance = pathMap[currentNode].shortestDistance + 1;
+                    pathMap[neighbor].previousNode = currentNode;
+                }
+            }
+        }
+
+        // sets current node type to visited to update its color in the grid
+        if (currentNode->getNodeType() != START && currentNode->getNodeType() != TARGET) {
+            visited.push_back(currentNode);
+        }
+
+        // remove current node from list of unvisited nodes and add it to visited
+        for (i = 0; i < unvisited.size(); i++) {
+            if (unvisited[i]->getId() == currentNode->getId()) {
+                break;
+            }
+        }
+        unvisited.erase(unvisited.begin()+(i));
+
+        timeout++;
+
+    }
+
+    // adds path nodes to vector
+    while (currentNode->getId() != startNode->getId()) {
+        path.push_back(currentNode);
+        currentNode = pathMap[currentNode].previousNode;
+        i++;
+    }
+
 }
 
 void Grid::breadthFirst(vector<Node*>& visited, vector<Node*>& path) {
