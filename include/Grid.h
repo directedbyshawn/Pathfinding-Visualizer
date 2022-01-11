@@ -138,6 +138,14 @@ public:
     void reset();
 
     /**
+     * Calculates optimal theoretical path between any node and the target node
+     *
+     * @param node node in question
+     * @return optimal theoretical distance between node and target
+     */
+    int heuristic(Node& node);
+
+    /**
      * Performs dijkstra's algorithm by starting with the start node and determining the
      * shortest path to all neighboring nodes until it discovers the target. Technically
      * the current implementation is not actually dijkstra's algorithm as it stops when

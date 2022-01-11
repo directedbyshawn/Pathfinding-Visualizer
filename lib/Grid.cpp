@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include <iostream>
 #include <math.h>
 #include <map>
 
@@ -210,10 +211,16 @@ void Grid::reset() {
     init();
 }
 
+int Grid::heuristic(Node &node) {
+
+    return (abs(targetNode->getRow() - node.getRow()) + abs(targetNode->getColumn() - node.getColumn()));
+
+}
+
 void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 
     map<Node*, nodeMap> pathMap;
-    vector<Node*>  unvisited;
+    vector<Node*> unvisited;
     Node* currentNode;
     bool targetFound = false;
     int x, y, i, currentShortestDistance, timeout;
@@ -296,7 +303,7 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
 
     map<Node*, nodeMap> pathMap;
-    vector<Node*>  unvisited;
+    vector<Node*> unvisited;
     Node* currentNode;
     bool targetFound = false;
     int x, y, i, currentShortestDistance, timeout;
