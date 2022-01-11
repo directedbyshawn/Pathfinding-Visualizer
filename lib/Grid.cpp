@@ -211,9 +211,9 @@ void Grid::reset() {
     init();
 }
 
-int Grid::heuristic(Node &node) {
+int Grid::heuristic(Node* node) {
 
-    return (abs(targetNode->getRow() - node.getRow()) + abs(targetNode->getColumn() - node.getColumn()));
+    return (abs(targetNode->getRow() - node->getRow()) + abs(targetNode->getColumn() - node->getColumn()));
 
 }
 
@@ -303,8 +303,9 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
 void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
 
     map<Node*, nodeMap> pathMap;
-    vector<Node*> unvisited;
+    vector<Node*> queue;
     Node* currentNode;
+    bool idFlag;
     bool targetFound = false;
     int x, y, i, currentShortestDistance, timeout;
 
@@ -320,34 +321,42 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
         }
     }
 
-    // add all verticies to unvisited vector
-    for (x = 0; x < getNumColumns(); x++) {
-        for (y = 0; y < getNumRows(); y++) {
-            unvisited.push_back(&nodes[x][y]);
-        }
-    }
+    queue.push_back(startNode);
 
     timeout = 0;
     while (!targetFound && timeout < 10000) {
 
         currentShortestDistance = 999;
 
-        // finds unvisited node with shortest distance from the start
-        for (Node* node : unvisited) {
-            if (pathMap[node].shortestDistance < currentShortestDistance) {
-                currentNode = node;
-                currentShortestDistance = pathMap[node].shortestDistance;
+        // finds unvisited node to be visited next
+        idFlag = false;
+        for (Node* node : queue) {
+            if (pathMap[node].shortestDistance + heuristic(node) < currentShortestDistance) {
+                for (Node* visitedNode : visited) {
+                    if (node->getId() == visitedNode->getId()) {
+                        idFlag = true;
+                    }
+                }
+                if (!idFlag) {
+                    currentNode = node;
+                    currentShortestDistance = pathMap[node].shortestDistance + heuristic(node);
+                }
+                idFlag = false;
             }
         }
 
-        // inspects all neighbors of current vertex
-        for (Node* neighbor : currentNode->getNeighbors()) {
-            // if target node has been found, stop
-            if (neighbor->getNodeType() == TARGET) {
-                targetFound = true;
+        // remove current node from queue
+        for (i = 0; i < queue.size(); i++) {
+            if (queue[i]->getId() == currentNode->getId()) {
                 break;
             }
+        }
+        queue.erase(queue.begin() + (i));
+
+        // inspects all neighbors of current vertex
+        for (Node* neighbor : currentNode->getNeighbors()) {
             if (neighbor->getNodeType() == UNVISITED) {
+                queue.push_back(neighbor);
                 // if calculated distance from current neighbor to start node is less
                 // than the known distance, then value in the pathMap is replaced
                 if (pathMap[currentNode].shortestDistance+1 < pathMap[neighbor].shortestDistance) {
@@ -355,20 +364,17 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
                     pathMap[neighbor].previousNode = currentNode;
                 }
             }
+            // if target node has been found, stop
+            else if (neighbor->getNodeType() == TARGET) {
+                targetFound = true;
+                break;
+            }
         }
 
         // sets current node type to visited to update its color in the grid
         if (currentNode->getNodeType() != START && currentNode->getNodeType() != TARGET) {
             visited.push_back(currentNode);
         }
-
-        // remove current node from list of unvisited nodes and add it to visited
-        for (i = 0; i < unvisited.size(); i++) {
-            if (unvisited[i]->getId() == currentNode->getId()) {
-                break;
-            }
-        }
-        unvisited.erase(unvisited.begin()+(i));
 
         timeout++;
 
