@@ -1,4 +1,4 @@
-# Pathfinding Visualizer (WIP)
+# Pathfinding Visualizer
 
 <img alt="screenshot of application" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/sc1.jpg" style="width: 500px; margin: 30px;">
 
