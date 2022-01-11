@@ -6,7 +6,7 @@
 This is a visualization tool to help enhance and demonstrate my knowledge of pathfinding algorithms. The program works by creating a
 two-dimensional grid populated with nodes of equal size. Each node has a theoretical edge connecting it to its
 neighboring nodes with a weight of 1. The grid has a start node and a target node, and the user is allowed to draw
-wall nodes anywhere else on the grid. Dijkstra's algorithm will then find the shortest path between the start and 
+wall nodes anywhere else on the grid. The algorithm will then find the shortest path between the start and 
 target node and draw it for the user to see on the screen. The nodes that have been visited are also visible on the
 screen so the user can get a feel for what is happening in the algorithm in real time. 
 
