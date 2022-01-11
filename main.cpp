@@ -152,8 +152,8 @@ void initDropdown() {
     algorithm.setCenterY(55);
     algorithm.addOption({"Dijkstra", 5.0});
     algorithm.addOption({"A* Search", 5.0});
-    algorithm.addOption({"Breadth First", 5.0});
-    algorithm.addOption({"Depth First", 5.0});
+    //algorithm.addOption({"Breadth First", 5.0});
+    //algorithm.addOption({"Depth First", 5.0});
     entities.push_back(&algorithm);
 }
 
