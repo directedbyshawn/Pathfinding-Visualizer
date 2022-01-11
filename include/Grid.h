@@ -143,7 +143,7 @@ public:
      * @param node node in question
      * @return optimal theoretical distance between node and target
      */
-    int heuristic(Node& node);
+    int heuristic(Node* node);
 
     /**
      * Performs dijkstra's algorithm by starting with the start node and determining the
