@@ -4,20 +4,17 @@
 
 ## Description
 This is a visualization tool to help enhance and demonstrate my knowledge of pathfinding algorithms. The program works by creating a
-two-dimensional grid populated with nodes of equal size. Each node has a theoretical edge connecting it to its
-neighboring nodes with a weight of 1. The grid has a start node and a target node, and the user is allowed to draw
-wall nodes anywhere else on the grid. The algorithm will then find the shortest path between the start and 
-target node and draw it for the user to see on the screen. The nodes that have been visited are also visible on the
-screen so the user can get a feel for what is happening in the algorithm in real time. 
+two-dimensional grid populated with nodes. Each node has an edge connecting it to its
+direct neighbor nodes with a weight of 1. The grid has a start node and a target node, and the user is allowed to draw
+wall nodes anywhere else on the grid. The algorithms will then find a path between the start and 
+target node. Some algoritms guarantee the shortest path while others don't. The visited nodes animate in order of traversal to give
+the user a feel for how the algorithm works. 
 
 ## Purpose
-The purpose of this project was to enhance and demonstrate my understanding of pathfinding algorithms. While I did
-learn a lot about implementing such algorithms, I spent more time creating the GUI which was much more time-consuming
-and complicated than I had anticipated.
+The purpose of this project was to enhance and demonstrate my understanding of pathfinding algorithms. It taught me a great deal about
+pathfinding algorithms, complexity analysis, and creating display elements from scratch.
 
 ## Directions
-The only library used in this project is OpenGL. `CMakeLists.txt`
-is already configured to run on both apple and windows machines if you compile your projects with CMake, however I have not tested it on apple machines so
-I cannot verify that it will run successfully. 
-
+The only library used in this project is OpenGL. All of the display elements were created from scratch using OpenGL. `CMakeLists.txt`
+is already configured to run on both apple and windows machines if you compile your projects with CMake.
 
