@@ -1,6 +1,6 @@
 # Pathfinding Visualizer
 
-<img alt="screenshot of application" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/sc1.jpg" style="width: 500px; margin: 30px;">
+<img alt="screenshot of application" src="https://srodgers.w3.uvm.edu/cs120/pathfinding-images/sc2.png" style="width: 500px; margin: 30px;">
 
 ## Description
 This is a visualization tool to help enhance and demonstrate my knowledge of pathfinding algorithms. The program works by creating a
