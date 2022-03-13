@@ -331,19 +331,13 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
         currentShortestDistance = 999;
 
         // finds unvisited node to be visited next
-        idFlag = false;
+        bool conditionOne, conditionTwo;
         for (Node* node : queue) {
-            if (pathMap[node].shortestDistance + heuristic(node) < currentShortestDistance) {
-                for (Node* visitedNode : visited) {
-                    if (node->getId() == visitedNode->getId()) {
-                        idFlag = true;
-                    }
-                }
-                if (!idFlag) {
-                    currentNode = node;
-                    currentShortestDistance = pathMap[node].shortestDistance + heuristic(node);
-                }
-                idFlag = false;
+            conditionOne = pathMap[node].shortestDistance + heuristic(node) < currentShortestDistance;
+            conditionTwo = visitedIds[node->getId()] == -1;
+            if (conditionOne && conditionTwo) {
+                currentNode = node;
+                currentShortestDistance = pathMap[node].shortestDistance + heuristic(node);
             }
         }
 
