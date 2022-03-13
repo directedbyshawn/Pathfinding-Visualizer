@@ -244,8 +244,7 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
         }
     }
 
-    timeout = 0;
-    while (!targetFound && timeout < 10000) {
+    while (!targetFound) {
 
         currentShortestDistance = 999;
 
@@ -287,8 +286,6 @@ void Grid::dijkstras(vector<Node*>& visited, vector<Node*>& path) {
         }
         unvisited.erase(unvisited.begin()+(i));
 
-        timeout++;
-
     }
 
     // adds path nodes to vector
@@ -309,6 +306,12 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
     bool targetFound = false;
     int x, y, i, currentShortestDistance, timeout;
 
+    // vector to keep track of visited values
+    vector<int> visitedIds((getNumColumns() * getNumRows())+1);
+    for (i = 1; i < visitedIds.size(); i++) {
+        visitedIds[i] = -1;
+    }
+
     // initialize nodemap
     for (x = 0; x < getNumColumns(); x++) {
         for (y = 0; y < getNumRows(); y++) {
@@ -323,8 +326,7 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
 
     queue.push_back(startNode);
 
-    timeout = 0;
-    while (!targetFound && timeout < 10000) {
+    while (!targetFound) {
 
         currentShortestDistance = 999;
 
@@ -374,9 +376,8 @@ void Grid::aStar(vector<Node*>& visited, vector<Node*>& path) {
         // sets current node type to visited to update its color in the grid
         if (currentNode->getNodeType() != START && currentNode->getNodeType() != TARGET) {
             visited.push_back(currentNode);
+            visitedIds[currentNode->getId()] = 1;
         }
-
-        timeout++;
 
     }
 
