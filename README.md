@@ -18,3 +18,6 @@ pathfinding algorithms, complexity analysis, and creating display elements from 
 The only library used in this project is OpenGL. All of the display elements were created from scratch using OpenGL. `CMakeLists.txt`
 is already configured to run on both apple and windows machines if you compile your projects with CMake.
 
+## Demo
+<p> Click <a href="https://youtu.be/LR_e9LG950k" target="_blank">here</a> for a video demo of the tool! </p>
+
