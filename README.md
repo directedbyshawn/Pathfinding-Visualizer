@@ -15,12 +15,12 @@ In the traditional implementation of Dijkstra's algorithm, you get a runtime com
 graph and m is the number of edges. In this implementation, it runs in O(n+m). This is because the algorithm terminates when the target node
 is found, so it almost never searches every node and every edge. A* search also runs in O(n+m). While these two algorithms have the same
 runtime complexity, A* will almost always run faster, as it has an added heuristic. The heuristic determines the theoretical optimal path from
-any node to the target node, excluding the concept of wall nodes. This allows the algorithm to prioritize nodes close to the target node as opposed
+any node to the target node, disregarding the concept of wall nodes. This allows the algorithm to prioritize nodes close to the target node as opposed
 to Dijkstra's, which searches breadth first.
 
 ## Purpose
 The purpose of this project was to enhance and demonstrate my understanding of pathfinding algorithms. It taught me a great deal about
-pathfinding algorithms, complexity analysis, and creating display elements from scratch.
+pathfinding algorithms, complexity analysis, and creating UI elements from scratch.
 
 ## Directions
 The only library used in this project is OpenGL. All of the display elements were created from scratch using OpenGL. `CMakeLists.txt`
