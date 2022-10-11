@@ -11,9 +11,9 @@ target node. Some algorithms guarantee the shortest path while others don't. The
 the user a feel for how the algorithm works. 
 
 ## Complexity Analysis
-In the traditional implementation of Dijkstra's algorithm, you get a runtime complexity of Θ(n+m), where n is the number of nodes in the 
-graph and m is the number of edges. In this implementation, it runs in O(n+m). This is because the algorithm terminates when the target node
-is found, so it almost never searches every node and every edge. A* search also runs in O(n+m). While these two algorithms have the same
+In the traditional implementation of Dijkstra's algorithm, you get a runtime complexity of $\theta (n+m)$, where $n$ is the number of nodes in the 
+graph and $m$ is the number of edges. In this implementation, it runs in $O(n+m)$. This is because the algorithm terminates when the target node
+is found, so it almost never searches every node and every edge. A* search also runs in $O(n+m)$. While these two algorithms have the same
 runtime complexity, A* will almost always run faster, as it has an added heuristic. The heuristic determines the theoretical optimal path from
 any node to the target node, disregarding the concept of wall nodes. This allows the algorithm to prioritize nodes close to the target node as opposed
 to Dijkstra's, which searches breadth first.
