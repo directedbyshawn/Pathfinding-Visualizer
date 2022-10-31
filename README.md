@@ -27,9 +27,5 @@ The only library used in this project is OpenGL. All of the display elements wer
 is already configured to run on both Mac and Windows machines if you compile your projects with CMake.
 
 ## Demo
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NpZ87BABE80" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
-
 <p> Click <a href="https://youtu.be/NpZ87BABE80" target="_blank">here</a> for a short 2 minute video demo of the tool! </p>
 
